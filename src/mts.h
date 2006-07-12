@@ -40,6 +40,7 @@ class mts {
 		int *modes; // 1=continuous, 2 and up for dichotomous etc data
 		int indReal;
 		int *lengths;
+		double *weights;
 		int xm;
 		
 		matrix **elements; //mts is an array of 2D arrays of values, ie a series of matrices
@@ -47,19 +48,19 @@ class mts {
 	//member methods: constructors
 	public: 
 		mts(void);
-		mts(const int vars, int *modes, const int indReal, int *lengths, int xm);
+		mts(const int vars, int *modes, const int indReal, int *lengths, double *weights, int xm);
 		
 	private:
 		//used by the constructors/reset, internal use only
-		void initialize(const int vars, int *modes, const int indReal, int *lengths, int xm); // called by constructors
+		void initialize(const int vars, int *modes, const int indReal, int *lengths, double *weights, int xm); // called by constructors
 		
 	public:
 		~mts();
 		
 	public: 
 	//reset to new dimensions
-		void reset(const int vars, int *modes, const int indReal, int *lengths, int xm);
-		void mtsdata(double *data, const int vars, int *modes, const int indReal, int *lengths, int xm); //reset from data
+		void reset(const int vars, int *modes, const int indReal, int *lengths, double *weights, int xm);
+		void mtsdata(double *data, const int vars, int *modes, const int indReal, int *lengths, double *weights, int xm); //reset from data
 		
 	//assigment
 	
@@ -70,6 +71,7 @@ class mts {
 		inline int getVars(void) {return(vars);}
 		inline int getIndReal(void) {return(indReal);}
 		int getLength(const int ir);
+		double getWeight(const int ir);
 		int getMode(const int vr);	
 	
 	//print to (R) screen
@@ -79,4 +81,3 @@ class mts {
 };
 
 #endif
-

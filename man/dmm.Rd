@@ -218,6 +218,16 @@ consequently they are not printed in the summary function.
 \code{\link[depmix]{generate}} for generating data from models. 
 }
 
+\references{
+	
+	On hidden Markov models: Lawrence R. Rabiner (1989).  A tutorial on
+	hidden Markov models and selected applications in speech recognition.
+	\emph{Proceedings of IEEE}, 77-2, p.  267-295.
+	
+	On latent class models: A. L. McCutcheon (1987). \emph{Latent class analysis}.
+	Sage Publications. 
+	
+}
 
 \examples{
 
@@ -228,13 +238,10 @@ mod <- dmm(nsta=2,itemt=c(1,2), stval=st)
 summary(mod)
 
 # 2 class latent class model with equal conditional probabilities in each class
-
 stv=c(1,rep(c(0.9,0.1),5),rep(c(0.1,0.9),5),0.5,0.5)
-
 # here the conditional probs of the first item are set equal to those in
 # the subsequent items
 conpat=c(1,rep(c(2,3),5),rep(c(4,5),5),1,1)
-
 lc=lca(ncl=2,itemtypes=rep(2,5),conpat=conpat,stv=stv)
 summary(lc)
 

@@ -63,4 +63,3 @@ void npsolc(int *n, int *nclin, int *ncnln, int *ldA, int *ldJu, int *ldR,
 } //end extern "C"
 
 #endif
-

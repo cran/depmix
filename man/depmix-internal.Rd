@@ -18,7 +18,7 @@
 \alias{poststart}
 \alias{tr2stin}
 
-\title{Fitting Dependent Mixture Models}
+\title{Depmix utility functions}
 \description{
   	
 	These functions are used internally by depmix functions. They should not be called
@@ -59,7 +59,7 @@
 \details{
 	Function bdiag takes as argument a list of matrices and returns the 
 	blockdiagonal matrix formed from these, and the other entries padded with 
-	zeroes. This function is from package assist. 
+	zeroes. This function is from package assist by Chunlei Ke and Yuedong Wang.
 } 
 
 \value{
@@ -68,9 +68,5 @@
 }
 
 \author{Ingmar Visser \email{i.visser@uva.nl}} 
-
-\examples{
-
-}
 
 \keyword{models} 

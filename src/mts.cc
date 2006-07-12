@@ -7,6 +7,8 @@ mts::mts(void) { //default constructor
 	indReal = 1;
 	lengths = new int[1];
 	lengths[0]=1;
+	weights = new double[1];
+	weights[0] = 1.0;
 	elements = new matrix*[indReal];
 	for(int i=0; i<indReal; i++) {
 		elements[i]=new matrix[lengths[i]];
@@ -18,20 +20,22 @@ mts::mts(void) { //default constructor
 	xm=0;
 }
 
-mts::mts(const int vm, int *mod, const int ir, int *lts, int xm) { //series constructor
-	initialize(vm,mod,ir,lts,xm);
+mts::mts(const int vm, int *mod, const int ir, int *lts, double *wts, int xm) { //series constructor
+	initialize(vm,mod,ir,lts,wts,xm);
 }
 
 //empty construction, all elements zero
-void mts::initialize(const int vm, int *mod, const int ir, int *lts, int xmiss) { //internal constructor
+void mts::initialize(const int vm, int *mod, const int ir, int *lts, double *wts, int xmiss) { //internal constructor
 	vars = vm;
 	modes = new int[vars];
 	for(int i=0; i<vars; i++) modes[i] = mod[i];
 	indReal = ir;
 	elements = new matrix*[indReal];
 	lengths = new int[indReal];
+	weights = new double[indReal];
 	for(int i=0; i<indReal; i++) {
 		lengths[i]=lts[i];
+		weights[i]=wts[i];
 		elements[i] = new matrix[lengths[i]];
 		for(int j=0; j<lengths[i]; j++) {
 			elements[i][j].reset(1,vars);
@@ -43,19 +47,21 @@ void mts::initialize(const int vm, int *mod, const int ir, int *lts, int xmiss) 
 mts::~mts() { //destructor
 	delete [] modes;
 	delete [] lengths;
+	delete [] weights;
 	delete [] elements;
 }
 
 //reset to new dimensions
-void mts::reset(const int vars, int *mod, const int indReal, int *lts, int xm) {
+void mts::reset(const int vars, int *mod, const int indReal, int *lts, double *wts, int xm) {
 	delete [] modes;
 	delete [] lengths;
+	delete [] weights;
 	delete [] elements;
-	initialize(vars,mod,indReal,lts,xm);
+	initialize(vars,mod,indReal,lts,wts,xm);
 }
 
-void mts::mtsdata(double *data, const int vars, int *modes, const int indReal, int *lengths, int xm) {
-	reset(vars,modes,indReal,lengths,xm);
+void mts::mtsdata(double *data, const int vars, int *modes, const int indReal, int *lts, double *wts, int xm) {
+	reset(vars,modes,indReal,lts,wts,xm);
 	int dpt=0;
 	for(int ir=1; ir<=indReal; ir++) {
 		for(int tp=1; tp<=getLength(ir); tp++) {
@@ -73,6 +79,7 @@ void mts::mtsdata(double *data, const int vars, int *modes, const int indReal, i
 				dpt += 1;
 			}
 		}
+		
 	}
 }
 
@@ -128,7 +135,6 @@ double mts::operator()(const int tp) {
 	return(elements[0][tp-1](1));
 }
 
-
 int mts::getLength(const int ir) {
 #ifdef MTSBOUNDS
 	if(ir<1 || ir>indReal) {
@@ -137,6 +143,16 @@ int mts::getLength(const int ir) {
 	}
 #endif
 	return(lengths[ir-1]);
+}
+
+double mts::getWeight(const int ir) {
+#ifdef MTSBOUNDS
+	if(ir<1 || ir>indReal) {
+		Rprintf("Invalid acces point of multivariate timeseries, indReal out of bounds (%d).\n", ir);
+		error("[MTS] Invalid weight access\n");
+	}
+#endif
+	return(weights[ir-1]);
 }
 
 int mts::getMode(const int vr) {
@@ -159,6 +175,11 @@ void mts::summary(void) {
 	Rprintf("Data length(s): ");
 	for(int i=1; i<=maxdata; i++)
 			Rprintf("%d ", getLength(i));
+	if(indReal>5) Rprintf("... \n");
+	else Rprintf("\n");
+	Rprintf("Case weights: ");
+	for(int i=1; i<=maxdata; i++)
+			Rprintf("%f ", getWeight(i));
 	if(indReal>5) Rprintf("... \n");
 	else Rprintf("\n");
 	int dp=0;
@@ -186,6 +207,11 @@ void mts::print(void) {
 			Rprintf("%d ", getLength(i));
 	if(indReal>5) Rprintf("... \n");
 	else Rprintf("\n");
+	Rprintf("Case weights: ");
+	for(int i=1; i<=maxdata; i++)
+			Rprintf("%f ", getWeight(i));
+	if(indReal>5) Rprintf("... \n");
+	else Rprintf("\n");
 	Rprintf("Data points: ");
 	for(int t=1;t<=getLength(1); t++) {
 		for(int i=1; i<=getVars(); i++) {
@@ -195,4 +221,3 @@ void mts::print(void) {
 	}
 	Rprintf("\n");
 }
-

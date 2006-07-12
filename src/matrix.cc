@@ -22,7 +22,8 @@ matrix::matrix(const int idx1, const int idx2) {
 		for (int j=0;j<col;j++) 
 			value[i][j]=0.0;
 	}
-
+//	matrixConst += 1;
+//  	Rprintf("mat: %d \n",matrixConst);
 }
 
 //matrix to matrix copy constructor
@@ -33,6 +34,10 @@ matrix::matrix(const matrix &a) {
 		for (int j=0;j<col;j++)
 			value[i][j]=a.value[i][j];
 	}
+	/* 
+	 * matrixConst += 1;
+	 * Rprintf("mat: %d \n",matrixConst);
+	 */
 }
 
 //destructor

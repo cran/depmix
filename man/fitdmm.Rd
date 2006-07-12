@@ -25,11 +25,9 @@
 	latent state sequence for a given dataset and model.}
 }
 \usage{
-	
-	fitdmm(dat, dmm, printlevel = 1, poster = TRUE, tdcov = 0, ses
-                 = TRUE, method = "nlm", der = 1, vfactor = 15,
-                 iterlim = 300, accuracy = "standard", kmst = !dmm$st,
-                 kmrep=5, postst = TRUE)
+	fitdmm(dat,dmm,printlevel=1,poster=TRUE,tdcov=0,ses=TRUE,
+			method="nlm",der=1,vfactor=15,iterlim=100,
+			accuracy="standard",kmst=!dmm$st,kmrep=5,postst=TRUE) 	
 	loglike(dat, dmm, tdcov = 0, grad = FALSE, hess = FALSE, set
                  = TRUE, grInd = 0, sca = 1, printlevel = 1)
 	posterior(dat,dmm,tdcov=0,printlevel=1)
@@ -61,8 +59,7 @@
 	can be found in fit\$post.}
 	
 	\item{method}{This is the optimization algorithm that is used. NLM is the 
-	default method. There is further support for optim and NPSOL, the
-	latter only when the sources are provided.}
+	default method. There is further support for optim and NPSOL.}
 	
 	\item{der}{Specifies whether derivatives are to be used in optimization.}
 	
@@ -91,7 +88,9 @@
 	
 	\item{grad}{logical; if TRUE the gradients are returned.}
 
-	\item{hess}{logical; if TRUE the hessian is returned.}
+	\item{hess}{logical; if TRUE the hessian is returned; it is not
+	implemented currently and hence setting it to true will produce a 
+	warning.}
 	
 	\item{set}{Whith the default value TRUE, the data and models parameters
 	are sent to the C/C++ routines before computing the loglikelihood. When set
@@ -110,7 +109,7 @@
 	\item{kmrep}{If no starting values are provided, \code{kmrep} sets of
 	starting values are generated using kmeans in appropriate cases. The
 	best resulting set of starting values is optimized further.}
-	
+
 	\item{grInd}{Logical argument; if TRUE, individual contributions of
 	each independent realization to the gradient vector will be returned.}
 	
@@ -132,7 +131,7 @@
 	
 The function \code{fitdmm} optimizes the parameters of a mixture of
 \code{dmm}s using a general purpose optimization routine subject to linear
-and nonlinear constraints on the parameters. 
+constraints on the parameters. 
 
 } 
 
@@ -152,7 +151,7 @@ method that prints the summary of the fitted model, and the following fields:
 
   	\item{mod}{The fitted model.}
 	
-	\item{post}{See function posterior for details.
+	\item{post}{See function posterior for details.}
 
 
 \code{loglike} returns a list of the following: 
@@ -192,7 +191,9 @@ model.
 	mod$freepars, date.}
 }
 
-\author{Ingmar Visser \email{i.visser@uva.nl}} 
+\author{Ingmar Visser \email{i.visser@uva.nl}, Development of this pacakge
+was supported by European Commission grant 51652 (NEST) and by a VENI grant
+from the Dutch Organization for Scientific Research (NWO).}
 
 \references{
 	
@@ -203,7 +204,16 @@ model.
 	matrix for hidden Markov models. \emph{Journal of Computational and Graphical
 	Statistics}.
 	
-}
+} 
+
+
+\note{The \code{\link[repeated]{repeated}} library
+by Jim Lindsey fits hidden markov models.  \code{fitdmm} fits time series of
+arbitrary length and mixtures of \code{dmm}s, where, to the best of my
+knowledge, other packages are limited due to the different optimization
+routines that are commonly used for these types of models (this is
+certainly so for categorical data models).}
+
 
 \seealso{\code{\link[depmix]{dmm}},\code{\link[depmix]{markovdata}},\code{\link[repeated]{repeated}}}
 
@@ -254,13 +264,12 @@ r1=markovdata(dat=speed[1:168,],item=itemtypes(speed))
 r2=markovdata(dat=speed[169:302,],item=itemtypes(speed))
 r3=markovdata(dat=speed[303:439,],item=itemtypes(speed))
 
-
 # define 2-state model with constraints
 conpat=rep(1,15)
 conpat[1]=0
 conpat[8:9]=0
 conpat[14:15]=0
-stv=c(1,0.9,0.1,0.1,0.9,5.5,0.2,0.5,0.5,6.4,0.25,0.9,0.1,0.5,0.5)
+stv=c(1,0.9,0.1,0.1,0.9,5.5,0.2,0.5,0.5,6.4,0.25,0.9,0.1,0,1)
 mod<-dmm(nstates=2,itemt=c("n",2),stval=stv,conpat=conpat)
 
 # define 3-group model with equal transition parameters, and no 

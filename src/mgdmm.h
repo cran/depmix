@@ -81,4 +81,3 @@ class mgdmm {
 };
 
 #endif
-

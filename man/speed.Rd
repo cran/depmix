@@ -20,7 +20,11 @@
 }
 \usage{data(speed)}
 \format{An object of class \code{markovdata}.}
-\source{Han L. J. Van der Maas, Conor V. Dolan and Peter C. M. Molenaar
-(2005), Phase Transitions in the Trade-Off between Speed and Accuracy in
-Choice Reaction Time Tasks.  \emph{Manuscript in revision}.}
+\source{
+
+	Han L. J. Van der Maas, Conor V. Dolan and Peter C. M. Molenaar (2005),
+	Phase Transitions in the Trade-Off between Speed and Accuracy in Choice
+	Reaction Time Tasks.  \emph{Manuscript in revision}. 
+
+}
 \keyword{datasets}

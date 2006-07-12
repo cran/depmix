@@ -15,7 +15,7 @@
 }
 \usage{
 
-	mgdmm(dmm,ng=1,modname=NULL,trans=FALSE,obser=FALSE,init=FALSE)
+	mgdmm(dmm,ng=1,modname=NULL,trans=FALSE,obser=FALSE,init=FALSE,conpat=NULL)
 	\method{summary}{mgd}(object, specs=FALSE, precision=3, se=NULL, ...)
 	
 }
@@ -35,6 +35,9 @@
 	\code{trans}ition parameters, \code{obser}vation parameters and
 	\code{init}ial state parameters should be estimated equal across
 	groups.}
+	
+	\item{conpat}{Can be used to specify general linear constraints. 
+	See \code{\link[depmix]{dmm}} for details.}
 	
 	\item{precision}{Precision sets the number of digits to be printed in
 	the summary functions.}

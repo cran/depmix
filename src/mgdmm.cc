@@ -166,4 +166,3 @@ void mgdmm::print(void) {
 		}
 	}
 }
-
