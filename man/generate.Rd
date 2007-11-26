@@ -4,11 +4,12 @@
 \alias{generate}
 
 \title{Generate data from a dependent mixture model}
-
-\description{
-	\item{generate}{\code{generate} generates a dataset according to a given \code{dmm}.}
-
+	\description{
+		\item{generate}{\code{generate} generates a dataset according to a
+		given \code{dmm}.
+	}
 }
+
 \usage{	
 	generate(ntimes,dmm,nreal=1) 
 
@@ -29,11 +30,14 @@
 
 \details{ 
 	
-	\code{generate} generates a date set of the specified dimensions 
-	\code{ntimes} and \code{nreal} using the parameter values in \code{dmm}, 
-	which should be an object of class \code{dmm} or \code{mixdmm}.
-	\code{generate} does not handle multi group models, which can be run
-	separately.
+	\code{generate} generates a date set of the specified dimensions
+	\code{ntimes} and \code{nreal} using the parameter values in
+	\code{dmm}, which should be an object of class \code{dmm} or
+	\code{mixdmm}.  \code{generate} does not handle multi group models,
+	which can be run separately.
+
+	This function is used in the \code{bootstrap}'ping routine to compute
+	standard errors based on parametric bootstraps.
 
 }
 \value{

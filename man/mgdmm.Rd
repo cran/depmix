@@ -85,7 +85,6 @@ fields of an object of class \code{dmm} and the following extra:
 
 \seealso{\code{\link[depmix]{dmm}} on defining single component models, and
 \code{\link[depmix]{mixdmm}} for defining mixtures of \code{dmm}'s.}
-}
 
 \examples{
 

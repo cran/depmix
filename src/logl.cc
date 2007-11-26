@@ -603,9 +603,10 @@ void ngCovSetUp(int *groupnr, double *data, int *vars, int *modes, int *indReal,
 /*															*/
 /************************************************************/
 
-/*
+
 // MAIN OPT ROUTINE CALLED FROM R
 // This can be used for any problem ... provided that the loglikelihood function is provided
+/*
 void npsolc(int *n, int *nclin, int *ncnln, int *ldA, int *ldJu, int *ldR, 
 			double *A, double *bl, double *bu,
 			int *inform, int *iter, int *istate, double *c, double *cJacu, double *clamda, 
@@ -760,6 +761,7 @@ void funobj(int *mode, int *noptpars, double *optpars, double *objf, double *g, 
 
 //derivatives of non-linear contraints of funobj (dummy function because there are no non-linear constraints)
 void funcon(int *mode, int *ncnln, int *n, int *ldJ, int *needc, double *x, double *c, double *cJac, int *nstate) { }
+
 */
 
 // END NPSOL FUNCTIONS

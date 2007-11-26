@@ -14,15 +14,15 @@
 \usage{data(discrimination)}
 \format{An object of class \code{markovdata}.}
 \source{
-	Maartje E. J. Raijmakers, Conor V. Doland and Peter C. M. Molenaar 
+	Maartje E. J. Raijmakers, Conor V. Dolan and Peter C. M. Molenaar 
 	(2001).  Finite mixture distribution models of simple discrimination
 	learning. \emph{Memory \& Cognition}, vol 29(5).
 
 	Ingmar Visser, Verena D. Schmittmann, and Maartje E. J. Raijmakers
-	(2006).  Markov process models for discrimination learning.  In: Kees
+	(2007).  Markov process models for discrimination learning.  In: Kees
 	van Montfort, Han Oud, and Albert Satorra (Eds.), \emph{Longitudinal
 	models in the behavioral and related sciences}, Mahwah (NJ): Lawrence
-	Erlbaum Associates (in press).
+	Erlbaum Associates.
 
 	Verena D. Schmittmann, Ingmar Visser and Maartje E. J. Raijmakers
 	(2006).  Multiple learning modes in the development of rule-based

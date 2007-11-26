@@ -38,7 +38,7 @@
 	not change over time.}
 
 	\item{itemtypes}{A vector of length \code{nitems} providing the type of
-	measurement, 1 for continuous (=gaussian) data, 2 for a binary item, n>3 for
+	measurement, 1 for gaussian data, 2 for a binary item, n>3 for
 	categorical items with n answer possibilities. Answer categories are 
 	assumed to be unordered categorical. Ordinal responses can be implemented 
 	using inequality and/or linear constraints.}
@@ -64,7 +64,7 @@
 	
 	\item{tdfix,tdst}{The first is a logical vector indicating (with 1's) 
 	which parameters are dependent on covariates (it should have length npars). 
-	Tdst provides the starting values for the regression parameters. 
+	tdst provides the starting values for the regression parameters. 
 	Using tdcov=TRUE in fitdmm will actually fit the regression parameters. 
 	The covariate itself has to be specified in the data as 
 	"covariate" (see help on markovdata) and should be scaled to 0-1.}
@@ -77,10 +77,10 @@
 	parameters.  If \code{linmat} is provided, make sure it is correct,
 	otherwise strange results may occur in fitting models.}
 	
-	\item{snames}{Names for the states may be provided in statenames. 
-	Defaults are State1, State2 etc. They are printed in the summary.}
+	\item{snames}{Names for the states may be provided in snames. 
+	Defaults are State1, State2 etc. These are printed in the summary.}
 
-	\item{inames}{Names for items may be provided in itemnames. 
+	\item{inames}{Names for items may be provided in inames. 
 	Defaults are Item1, Item2 etc. They are printed in the summary.}
 		
 	\item{dmm}{Object of class \code{dmm}.}
@@ -101,41 +101,42 @@
 	The function \code{dmm} creates an object of class \code{dmm} and sets
 	random initial parameter values if these are not provided.  Even though
 	\code{dmm} is not a mixture of Markov models, the mixture parameter is
-	is included in the parameter vector. This is important when specifying 
-	constraints. Parameters are ordered as follows: the first parameter(s) are
-	the mixing proportions of the mixture of Markov and/or latent class models.
-	I.e., when a single latent class model or a single Markov chain is fitted,
-	this mixture proportion has value 1.0 and is it is fixed in estimation.
-	After the mixing proportions, the next parameters in the parameter vector
-	are the transition matrix parameters, the square of nstates in row-major order.
-	That is, first the transition probabilities from state 1 to all the other 
-	states are given, then the probabilities from state 2 to all the other 
-	states etc. Next are the observation matrix parameters. These are provided
-	consecutively for each state/class. Ie a trichtomous item model with two 
-	states has 6 observation parameters; the first three are the probabilities
-	of observing category 1, 2 and 3 respectively in state 1 (which sum to one), 
-	and then similarly for state 2. As another example: suppose we have model 
-	for one binary item and one gaussian item, in that order, we would have 
-	4 observation parameters for each state, first the probabilities of observing
-	a symbol from category 1 or 2 in state 1, the two parameters, the mean and
-	standard deviation for state 1, and then the same state 2 (see the example
-	in fitdmm with data from rudy). Finally the initial state probabilities 
-	are provided, in the order of the states. In the case of a latent class 
-	model or a finite mixture model, these parameters are usually denote as the
-	mixture proportions. 
+	is included in the parameter vector.  This is important when specifying
+	constraints.  Parameters are ordered as follows: the first parameter(s)
+	are the mixing proportions of the mixture of Markov and/or latent class
+	models.  I.e., when a single latent class model or a single Markov
+	chain is fitted, this mixture proportion has value 1.0 and is it is
+	fixed in estimation.  After the mixing proportions, the next parameters
+	in the parameter vector are the transition matrix parameters, the
+	square of nstates in row-major order.  That is, first the transition
+	probabilities from state 1 to all the other states are given, then the
+	probabilities from state 2 to all the other states etc.  Next are the
+	observation matrix parameters.  These are provided consecutively for
+	each state/class.  Ie a trichtomous item model with two states has 6
+	observation parameters; the first three are the probabilities of
+	observing category 1, 2 and 3 respectively in state 1 (which sum to
+	one), and then similarly for state 2.  As another example: suppose we
+	have model for one binary item and one gaussian item, in that order, we
+	would have 4 observation parameters for each state, first the
+	probabilities of observing a symbol from category 1 or 2 in state 1,
+	the two parameters, the mean and standard deviation for state 1, and
+	then the same state 2 (see the example in fitdmm with data from rudy).
+	Finally the initial state probabilities are provided, in the order of
+	the states.  In the case of a latent class model or a finite mixture
+	model, these parameters are usually denote as the mixture proportions.
 	
-	Linear constraints can be set using arguments \code{conrows} and \code{conpat}.
-	\code{conrows} must be contain nc by npars values, in row major
-	order, with nc the number of contraints to be specified.
-	\code{conrows} is used to define general linear constraints.  A row
-	of \code{conrows} must contain the partial derivatives of a general
-	linear constraint with respect to each of the parameters.  Suppose
-	we want the constraint x1 -2*x2=0, one row of conrows should
-	contain a 1 in position one and -2 in position and zeroes in the
-	remaining positions. In the function \code{mixdmm} \code{conrows} is 
-	understood to specify linear constraints on the mixing proportions only. 
-	As a consequence, it is not possible to easily constrain parameters 
-	between components of a mixture model. 
+	Linear constraints can be set using arguments \code{conrows} and
+	\code{conpat}.  \code{conrows} must be contain nc by npars values, in
+	row major order, with nc the number of contraints to be specified.
+	\code{conrows} is used to define general linear constraints.  A row of
+	\code{conrows} must contain the partial derivatives of a general linear
+	constraint with respect to each of the parameters.  Suppose we want the
+	constraint x1 -2*x2=0, one row of conrows should contain a 1 in
+	position one and -2 in position and zeroes in the remaining positions.
+	In the function \code{mixdmm} \code{conrows} is understood to specify
+	linear constraints on the mixing proportions only.  As a consequence,
+	it is not possible to easily constrain parameters between components of
+	a mixture model.
 
 	\code{conpat} can be used as a shortcut for both fixed and conrows.  It
 	must be a single vector of length npars contaning 0's (zeroes) for
@@ -224,8 +225,8 @@ consequently they are not printed in the summary function.
 	hidden Markov models and selected applications in speech recognition.
 	\emph{Proceedings of IEEE}, 77-2, p.  267-295.
 	
-	On latent class models: A. L. McCutcheon (1987). \emph{Latent class analysis}.
-	Sage Publications. 
+	On latent class models: A. L. McCutcheon (1987).  \emph{Latent class
+	analysis}.  Sage Publications.
 	
 }
 

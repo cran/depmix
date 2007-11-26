@@ -25,9 +25,9 @@
 	latent state sequence for a given dataset and model.}
 }
 \usage{
-	fitdmm(dat,dmm,printlevel=1,poster=TRUE,tdcov=0,ses=TRUE,
-			method="nlm",der=1,vfactor=15,iterlim=100,
-			accuracy="standard",kmst=!dmm$st,kmrep=5,postst=TRUE) 	
+	fitdmm(dat, dmm, printlevel = 1, poster = TRUE, tdcov = 0,
+                 ses = TRUE, method = "optim", vfactor=15, der = 1, iterlim = 100,
+                 kmst = !dmm$st, kmrep = 5, postst = FALSE)
 	loglike(dat, dmm, tdcov = 0, grad = FALSE, hess = FALSE, set
                  = TRUE, grInd = 0, sca = 1, printlevel = 1)
 	posterior(dat,dmm,tdcov=0,printlevel=1)
@@ -58,8 +58,9 @@
 	\item{poster}{By default posteriors are computed, the result of which
 	can be found in fit\$post.}
 	
-	\item{method}{This is the optimization algorithm that is used. NLM is the 
-	default method. There is further support for optim and NPSOL.}
+	\item{method}{This is the optimization algorithm that is used.  donlp2
+	from the Rdonlp2 package is the default method.  There is optional
+	support for NPSOL.}
 	
 	\item{der}{Specifies whether derivatives are to be used in optimization.}
 	
@@ -82,10 +83,6 @@
 	\item{iterlim}{The iteration limit for npsol, defaults to 100, which may
 	be too low for large models.}
 	
-	\item{accuracy}{This argument can be used to set accuracy of optimization 
-	when using \code{nlm} as optimizer. It can take values "standard" (the 
-	default), "high" and "best" for increasing levels of accuracy.}
-	
 	\item{grad}{logical; if TRUE the gradients are returned.}
 
 	\item{hess}{logical; if TRUE the hessian is returned; it is not
@@ -93,12 +90,13 @@
 	warning.}
 	
 	\item{set}{Whith the default value TRUE, the data and models parameters
-	are sent to the C/C++ routines before computing the loglikelihood. When set
-	is FALSE, this is not done. If an incorrect model was set earlier in the 
-	C-routines this may cause serious errors and/or crashes.}
+	are sent to the C/C++ routines before computing the loglikelihood.
+	When set is FALSE, this is not done.  If an incorrect model was set
+	earlier in the C-routines this may cause serious errors and/or
+	crashes.}
 	
-	\item{sca}{If set to -1.0 the negative loglikelihood, gradients and hessian 
-	are returned.}
+	\item{sca}{If set to -1.0 the negative loglikelihood, gradients and
+	hessian are returned.}
 	
 	\item{object}{An object of class \code{fit}, ie the return value of 
 	fitdmm.}
@@ -167,29 +165,34 @@ method that prints the summary of the fitted model, and the following fields:
 
 \code{posterior} returns lists of the following: 
 
-	\item{states}{A matrix of dimension 2+sum(nstates) by sum(length(ntimes)) containing 
-	in the first column the a posteriori component, in the second column the a posteriori 
-	state and in the remaining column the posterior probabilities of all states.}
+	\item{states}{A matrix of dimension 2+sum(nstates) by
+	sum(length(ntimes)) containing in the first column the a posteriori
+	component, in the second column the a posteriori state and in the
+	remaining column the posterior probabilities of all states.}
 
-	\item{comp}{Contains the posterior component number for each independent
-	realization; all ones for a single component model.}
+	\item{comp}{Contains the posterior component number for each
+	independent realization; all ones for a single component model.}
 
 \code{computeSes} returns a vector of length \code{npars} with the standard
 errors and a matrix \code{hs} with the hessian used to compute them.  The
 routine is not fail safe and can produce errors, ie when the (corrected)
-hessian is singular. 
+hessian is singular; a warning is issued when the hessian is close to being
+singular.
 
-\code{bootstrap} returns an object of class \code{fit} with three extra fields,
-the bootstrapped standard errors, bse, a matrix  with goodness-of-fit measures
-of the bootstrap samples, ie logl, AIC and BIC and pbetter, which is the 
-proportion of bootstrap samples that resulted in better fits than the original
-model. 
+\code{bootstrap} returns an object of class \code{fit} with three extra
+fields, the bootstrapped standard errors, bse, a matrix with
+goodness-of-fit measures of the bootstrap samples, ie logl, AIC and BIC and
+pbetter, which is the proportion of bootstrap samples that resulted in
+better fits than the original model.
 
 \code{summary.fit} pretty-prints the outputs.
 
 \code{oneliner} returns a vector of loglike, aic, bic, mod$npars,
-	mod$freepars, date.}
-}
+mod$freepars, date.
+
+} 
+
+
 
 \author{Ingmar Visser \email{i.visser@uva.nl}, Development of this pacakge
 was supported by European Commission grant 51652 (NEST) and by a VENI grant
@@ -197,25 +200,24 @@ from the Dutch Organization for Scientific Research (NWO).}
 
 \references{
 	
-	Lawrence R. Rabiner (1989). A tutorial on hidden Markov models and selected applications in
-   	speech recognition. \emph{Proceedings of IEEE}, 77-2, p. 267-295. 
+	Lawrence R. Rabiner (1989).  A tutorial on hidden Markov models and
+	selected applications in speech recognition.  \emph{Proceedings of
+	IEEE}, 77-2, p.  267-295.
 	
-	Theodore C. Lystig and James P. Hughes (2002). Exact computation of the observed information 
-	matrix for hidden Markov models. \emph{Journal of Computational and Graphical
-	Statistics}.
+	Theodore C. Lystig and James P. Hughes (2002).  Exact computation of
+	the observed information matrix for hidden Markov models.
+	\emph{Journal of Computational and Graphical Statistics}.
 	
 } 
 
 
-\note{The \code{\link[repeated]{repeated}} library
-by Jim Lindsey fits hidden markov models.  \code{fitdmm} fits time series of
-arbitrary length and mixtures of \code{dmm}s, where, to the best of my
-knowledge, other packages are limited due to the different optimization
-routines that are commonly used for these types of models (this is
-certainly so for categorical data models).}
+\note{\code{fitdmm} fits time series of arbitrary length and mixtures of
+\code{dmm}s, where, to the best of my knowledge, other packages are limited
+due to the different optimization routines that are commonly used for these
+types of models.}
 
 
-\seealso{\code{\link[depmix]{dmm}},\code{\link[depmix]{markovdata}},\code{\link[repeated]{repeated}}}
+\seealso{\code{\link[depmix]{dmm}},\code{\link[depmix]{markovdata}}}
 
 \examples{
 
@@ -255,7 +257,7 @@ stcov[2:5]=c(-0.4,0.4,0.15,-0.15)
 
 mod<-dmm(nstates=2,itemt=c("n",2),stval=stv,conpat=conpat,tdfix=tdfix,tdst=stcov,modname="twoboth+cov")
 
-fit3 <- fitdmm(dat=speed,dmm=mod,tdcov=1,der=0,ses=0,vfa=80,accu="best")
+fit3 <- fitdmm(dat=speed,dmm=mod,tdcov=1,der=0,ses=0,vfa=80)
 summary(fit3)
 
 # split the data into three time series

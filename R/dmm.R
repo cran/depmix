@@ -8,7 +8,7 @@ dmm <- function(nstates, itemtypes, modname=NULL, fixed=NULL, stval=NULL, conrow
 # check on nstates
 	if(nstates<1) stop("nstates must be positive.")
 # recode itemtypes/assign itemnames
-	TYPES=c("gaussian","normal","lognormal","weibull","gamma","3lognormal","3weibull","3gamma")
+	TYPES=c("gaussian","normal")
 	itemtnames = sapply(itemtypes,FUN=function(x){pmatch(tolower(as.character(x)),TYPES)})
 	itemtypes[which(!is.na(itemtnames))]=TYPES[itemtnames[which(!is.na(itemtnames))]]
 	itemtnames=itemtypes

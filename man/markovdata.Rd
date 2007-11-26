@@ -49,22 +49,22 @@
 
 	\item{itemtypes}{A vector providing the types of measurement with
 	possible values \sQuote{continuous}, \sQuote{categorical}, and
-	\sQuote{covariate}. This is mainly only used to rearrange the data when
-	there are covariates in such a way that the covariate is in the last
-	column. Only one covariate is supported in estimation of models.}
+	\sQuote{covariate}.  This is mainly only used to rearrange the data
+	when there are covariates in such a way that the covariate is in the
+	last column.  Only one covariate is supported in estimation of models.}
 	
 	\item{ntimes}{The number of repeated measurements, ie the length of the
 	time series (this may be a vector containing the lengths of independent
-	realiazations). It defaults the number of rows of the data frame or
+	realiazations).  It defaults the number of rows of the data frame or
 	data matrix.}
 	
-	\item{replicates}{Using this argument case weights can be provided. This is
-	particularly usefull in eg latent class analysis with categorical
-	variables when there usually are huge numbers of replicates, ie identical
-	response patterns. \code{depmix} computes the raw data log likelihood
-	for each case separately. Thus, when there are many replicates of a case a 
-	lot of computation time is saved by specifying case weights instead of
-	providing the full data set.}
+	\item{replicates}{Using this argument case weights can be provided.
+	This is particularly usefull in eg latent class analysis with
+	categorical variables when there usually are huge numbers of
+	replicates, ie identical response patterns.  \code{depmix} computes the
+	raw data log likelihood for each case separately.  Thus, when there are
+	many replicates of a case a lot of computation time is saved by
+	specifying case weights instead of providing the full data set.}
 	
 	\item{inames}{The names of items. These default to the column names of 
 	matrices or dataframes.}
@@ -79,9 +79,9 @@
 	
 	\item{...}{Further arguments passed on to plot and summary.}
 	
-	\item{nitems,nind}{In the plot function, these arguments control which data 
-	are to be plotted, ie nitems indicates a range of items, and nind a range of
-	realizations, respectively.}
+	\item{nitems,nind}{In the plot function, these arguments control which
+	data are to be plotted, ie nitems indicates a range of items, and nind
+	a range of realizations, respectively.}
 	
 } 
 
@@ -89,14 +89,14 @@
 
 The function \code{markovdata} coerces a given data frame or matrix to be
 an object of class \code{md} such that it can be used in
-\code{\link[depmix]{fithmm}}. The \code{md} object has its own summary,
+\code{\link[depmix]{fithmm}}.  The \code{md} object has its own summary,
 print and plot methods.
 
-The functions dname, itemtypes, ntimes, and replicates retrieve the respective
-attributes with these names; similarly \code{ncov, nitems, inames}, and
-\code{ind} retrieve the number of covariates, the number of items (the
-number of columns of the data), the column names and the number of
-\code{ind}ependent realizations respectively. 
+The functions dname, itemtypes, ntimes, and replicates retrieve the
+respective attributes with these names; similarly \code{ncov, nitems,
+inames}, and \code{ind} retrieve the number of covariates, the number of
+items (the number of columns of the data), the column names and the number
+of \code{ind}ependent realizations respectively.
 
 }
 	

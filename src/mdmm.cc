@@ -253,62 +253,6 @@ double mdmm::getProb(const double dat, const int st, const int it) {
 					sig = respPars[it-1](st,2);
 					prob = dnorm(dat,mu,sig,0);	
 					break;
-				//uniform
-				case 0:
-					double a,b;
-					a = respPars[it-1](st,1);
-					b = respPars[it-1](st,2);
-					prob = dunif(dat,a,b,0);
-					break;
-				// lognormal
-				case -21: 
-					double lmu,lsig;
-					lmu = respPars[it-1](st,1);
-					lsig = respPars[it-1](st,2);
-					prob = dlnorm(dat,lmu,lsig,0);
-					break;
-				// weibull
-				case -22:
-					double shape,scale;
-					shape = respPars[it-1](st,1);
-					scale = respPars[it-1](st,2);
-					prob = dweibull(dat,shape,scale,0);
-					break;
-				// gamma
-				case -23:
-	//				double shape,scale;
-					shape = respPars[it-1](st,1);
-					scale = respPars[it-1](st,2);
-					prob = dgamma(dat,shape,scale,0);
-					break;
-				// 3lognormal
-				case -31:
-	//				double lmu,lsig, 
-					double shift;
-					lmu = respPars[it-1](st,1);
-					lsig = respPars[it-1](st,2);
-					shift = respPars[it-1](st,3);
-					prob = dlnorm((dat-shift),lmu,lsig,0);
-					if((dat-shift)<=0) prob = 1E-15;
-					break;
-				// 3weibull
-				case -32:
-	//				double shape,scale,shift;
-					shape = respPars[it-1](st,1);
-					scale = respPars[it-1](st,2);
-					shift = respPars[it-1](st,3);
-					prob = dweibull((dat-shift),shape,scale,0);
-					if((dat-shift)<=0) prob = 1E-15;
-					break;
-				// 3gamma
-				case -33:
-	//				double shape,scale, shift;
-					shape = respPars[it-1](st,1);
-					scale = respPars[it-1](st,2);
-					shift = respPars[it-1](st,3);
-					prob = dgamma((dat-shift),shape,scale,0);
-					if((dat-shift)<=0) prob = 1E-15;
-					break;
 			}
 		}
 	}
