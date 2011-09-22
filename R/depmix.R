@@ -1,13 +1,12 @@
 ## package for fitting dependent mixture models
 
-.First.lib <- function(lib, pkg) {
-  library.dynam("depmix", pkg, lib)
-  require(MASS)
-}
-
-.Last.lib <- function(libpath) {
-	library.dynam.unload("depmix",libpath)
-}
+# .onLoad <- function(lib, pkg) {
+# 	library.dynam("depmix", pkg, lib)
+# }
+# 
+# .onUnLoad <- function(libpath) {
+# 	library.dynam.unload("depmix",libpath)
+# }
 
 ###################################
 #                                 #
@@ -257,7 +256,9 @@ fitdmm <- function(dat,dmm,printlevel=1,poster=TRUE,tdcov=0,ses=TRUE,method="opt
 	
 	##  call npmain to optimize the model (non-linear constraints not implemented yet)
 	if(method=="donlp") {
-			
+		
+		require("Rdonlp2")
+		
 		bu=bu[which(fixed==1)]
 		bl=bl[which(fixed==1)]
 		
@@ -418,7 +419,7 @@ fitdmm <- function(dat,dmm,printlevel=1,poster=TRUE,tdcov=0,ses=TRUE,method="opt
 			REPORT=10
 			if(printlevel>1 && printlevel<5) REPORT=5
 			if(printlevel>4) REPORT=1
-			if(printlevel==0) REPORT=0
+			if(printlevel==0) trace=0
 			control=list(fnscale=fnscale,trace=trace,factr=factr,maxit=maxit,REPORT=REPORT)
 			oldObjf=initLogl
 			
@@ -565,7 +566,7 @@ fitdmm <- function(dat,dmm,printlevel=1,poster=TRUE,tdcov=0,ses=TRUE,method="opt
 		
 ## compute posteriors
 	if(poster) {
-		cat("Computing posteriors \n")
+		if(printlevel>0) cat("Computing posteriors \n")
 		x<-system.time(pp<-posterior(dat=dat,dmm=mod,tdcov,printlevel))
 		z$timeUsed=z$timeUsed+x[3]
 	}
@@ -599,6 +600,8 @@ fitdmm <- function(dat,dmm,printlevel=1,poster=TRUE,tdcov=0,ses=TRUE,method="opt
 }
 
 loglike <- function(dat,dmm,tdcov=0,grad=FALSE,hess=FALSE,set=TRUE,grInd=0,sca=1.0,printlevel=1) {
+	
+	if(class(dmm)[1]=="fit") dmm <- dmm$mod
 	
 	if(set) {
 		xgmod=checkSetRecode(dat,dmm,tdcov,printlevel)
@@ -674,6 +677,8 @@ loglike <- function(dat,dmm,tdcov=0,grad=FALSE,hess=FALSE,set=TRUE,grInd=0,sca=1
 # compute posterior probabilities
 posterior <- function(dat,dmm,tdcov=0,printlevel=1) {
 	
+	if(class(dmm)[1]=="fit") dmm <- dmm$mod
+	
 	xgmod=checkSetRecode(dat,dmm,tdcov,printlevel)
 	if(xgmod$ng==1) dat=list(dat)
 	
@@ -713,6 +718,9 @@ posterior <- function(dat,dmm,tdcov=0,printlevel=1) {
 }
 
 computeSes <- function(dat,dmm) {
+	
+	if(class(dmm)[1]=="fit") dmm <- dmm$mod
+
 	cat("Computing standard errors \n")
 	mod=dmm
 	eps=1e-8
@@ -791,9 +799,9 @@ bootstrap <- function(object, dat, samples=100, pvalonly=0, ...) {
 			PACKAGE="depmix")
 	}
 	for(i in 1:samples) {
-		gen=generate(dmm=mod, nt=dat$ntimes)
+		gen=generate(dmm=mod, nt=ntimes(dat))
 		ll=loglike(dat=gen,dmm=mod,print=0)$logl
-		fit=fitdmm(dat=gen,dmm=mod,print=0,ses=0,postst=0)
+		fit=fitdmm(dat=gen,dmm=mod,print=0,ses=0,postst=0,poster=FALSE)
 		bootpars[i,]=fit$mod$pars
 		ll=fit$loglike
 		gof[i,]=c(ll,fit$aic,fit$bic)
