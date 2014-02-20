@@ -73,20 +73,26 @@ double& matrix::operator() (const int x,const int y) {
 		  
 //vector access
 double& matrix::operator() (const int x) {
-#ifdef MATRIXBOUNDS			
-	if(row==1) {
-		if(x<1 || x>col) error("[Matrix] Error: rowvector out of range.\n");
-	}
-	else {
-		 if(col==1) {
-		 	if (x<1 || x>row) error("[Matrix] Error: colvector out of range.\n");
-		 }
-		 else error("[Matrix] Error: matrix adressed as vector.\n");
-	}
-#endif
+  #ifdef MATRIXBOUNDS			
+ 	if(row==1) {
+ 		if(x<1 || x>col) {
+ 			error("[Matrix] Error: rowvector out of range.\n");
+ 		}
+ 	}
+ 	else {
+ 		 if(col==1) {
+ 		 	if (x<1 || x>row) {
+ 		 		error("[Matrix] Error: colvector out of range.\n");
+ 		 	}
+ 		 } else {
+ 			 error("[Matrix] Error: matrix adressed as vector.\n");
+ 		 }
+ 	}
+  #endif
 	if (row==1) return(value[0][x-1]);
 	else {
 		if (col==1) return(value[x-1][0]);
+		else error("[Matrix] Error: matrix adressed as vector.\n");
 	}
 }
 
@@ -308,7 +314,7 @@ matrix transpose(const matrix &a) {
 
 double max(matrix a) {
 	if(!(a.row==1||a.col==1)) error("[Matrix] max only defined for row or col vector.\n");
-	int maxidx=1;
+// 	int maxidx=1;
 	int idx=0; 
 	double max=a(1);
 	if(a.row==1) idx=a.col;
