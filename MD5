@@ -1,8 +1,8 @@
-d337737000fc2d9f74b203f6e9514fbb *CHANGES
-f631e6d25211195c49e599cd50adeba6 *DESCRIPTION
-4dbc1d058e4476e263956b5643368a2a *NAMESPACE
-6bbf1afc7d6bc1196029a874345b9902 *R/depmix-internal.R
-afd23e51247e5183652e87ad71b4ab35 *R/depmix.R
+b53fc0ac0487f134f98344839eed9183 *CHANGES
+5591a4fa37ba4354c70614a8b02e12ee *DESCRIPTION
+5738bdc9c61c37db70f88032fa48d0a7 *NAMESPACE
+b7825386dc48eadb1a30bdd6c0e578bd *R/depmix-internal.R
+4bf40c65c4e24eb2b5ff1aa6c19a53fe *R/depmix.R
 ccc730d54b8166d623275fae613ae84b *R/dmm.R
 45c83e86f4511a0375d09677909ce71c *R/generate.R
 c0f2b470f0433cc579ac0b341a8382b7 *R/lca.R
@@ -10,10 +10,10 @@ c0f2b470f0433cc579ac0b341a8382b7 *R/lca.R
 4dbbbad2c8cfaf7daee0893ed0bfbab6 *R/mgdmm.R
 c64c0f09391efb0be4271dd90d474832 *R/mixdmm.R
 1bff812d8afba3cb194cfea97f9e228e *README
-b2e180f19436b6c2fbf1f07595dc804d *data/discrimination.rda
-169205b72ed694def902d758bd456725 *data/speed.rda
+e86d9a4527030a8415e5e1b58e44bb6d *data/discrimination.rda
+d66b94e99111e6472f9991ee64cba838 *data/speed.rda
 adc93478d67580d45d520f1f2af919ee *inst/CITATION
-3c17ee0b84b8683cd1c7d3dcaec60417 *inst/doc/depmix-intro.pdf
+17078f6607617b3fdfe4f6572988784c *inst/doc/depmix-intro.pdf
 670c56733884ae7a8b38de6efbae7079 *man/depmix-internal.Rd
 9a23d6653be567ca4cf7ed80341dc757 *man/discrimination.Rd
 056a52b828cb7669635a0ec4203cad25 *man/dmm.Rd
